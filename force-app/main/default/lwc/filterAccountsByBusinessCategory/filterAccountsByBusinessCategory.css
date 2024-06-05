@@ -1,0 +1,85 @@
+/*
+  This CSS file provides the styling for the filterAccountsByBusinessCategory LWC. 
+  The LWC lives on the Experience Cloud site Business Registrations (https://vbr.veterans.utah.gov/s/)
+  and is used by the public to search for registered veteran-owned businesses in Utah. The LWC is used
+  in conjunction with the Apex class GetAccountsByBusinessCategory.
+  See Salesforce Team Jira issue FORCE-80 for more context.
+
+  Note: Differences in margin pixel numbers are often due to default margins being applied
+  (e.g., to the accordion sections) and the need to align elements with and without default margins.
+  
+  Author: Ksenia Choate
+  Date: 03/26/2024
+  Version: 1.0
+*/
+
+/* Define CSS variables */
+:host {
+  --primary-color: #2574a9;
+  --primary-margin: 20px;
+}
+
+/* Color of the page title and Business Name (blue so it's recognized as a hyperlink) */
+.page-title, .business-name {
+  color: var(--primary-color);
+}
+
+/* Properties of the page title */
+.page-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+/* Properties of the search bar, the two checkbox groups, and the two button sections */
+.search-bar, .checkbox-group, .buttons-section {
+  margin-top: var(--primary-margin);
+  margin-bottom: var(--primary-margin);
+}
+
+/* Properties of the two checkbox groups and the two button sections */
+.checkbox-group, .buttons-section {
+  margin-left: 22px;
+}
+
+/* Property of the two checkbox groups */
+.checkbox-group {
+  columns: 4;
+}
+
+/* Properties of the section that contains everything below the accordion */
+.below-accordion {
+  margin-left: 35px;
+  margin-right: 35px;
+}
+
+/* Makes the upper border of the accounts table header thicker than the lines between each row */
+.thick-border {
+  border-width: 2px;
+}
+
+/* Properties of the accounts table */
+.table-wrapper {
+  height: 600px;
+  overflow: auto;
+}
+
+/* Properties of the accounts table header */
+.table-wrapper th {
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 1;
+}
+
+/* Keeps the account table the same width,
+both when filters are applied and when they aren't*/
+.slds-table {
+  table-layout: fixed;
+  width: 100%; /* Ensure the table spans the full width of its container */
+}
+
+/* Adds a faux footer (empty space) below the lightning card */
+.bottom-space {
+  height: 50px;
+}

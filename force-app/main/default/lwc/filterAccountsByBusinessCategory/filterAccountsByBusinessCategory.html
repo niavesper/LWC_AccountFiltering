@@ -1,0 +1,242 @@
+<!--
+  This is the main template for the FilterAccountsByBusinessCategory LWC. It displays a list of registered
+  veteran-owned businesses and provides filtering options by business category, county, and search key. The LWC lives
+  on the Experience Cloud site Business Registrations (https://vbr.veterans.utah.gov/s/) and is used by the public to search for registered
+  veteran-owned businesses in Utah. The LWC is used in conjunction with the Apex class GetAccountsByBusinessCategory.
+  See DTS Salesforce Team Jira issue FORCE-80 for more context.
+  Author: Ksenia Choate
+  Date: 03/26/2024
+  Version: 1.0
+-->
+<template>
+  <header>
+    <h1 class="slds-form-element__label page-title">
+      REGISTERED VETERAN-OWNED BUSINESSES
+    </h1>
+  </header>
+
+  <main>
+    <!-- Card layout for filtering accounts by business category -->
+    <lightning-card>
+      <lightning-layout multiple-rows="true">
+        <lightning-layout-item>
+          <template if:true={businessCategoryOptions}>
+            <section>
+              <!-- Accordion containing business category checkboxes -->
+              <lightning-accordion allow-multiple-sections-open="true">
+                <lightning-accordion-section
+                  name="businessCategorySection"
+                  label="Expand to filter by Business Category"
+                  title="Business Category"
+                >
+                  <!-- Checkbox group for selecting business categories -->
+                  <fieldset class="section-content">
+                    <lightning-checkbox-group
+                      class="checkbox-group"
+                      name="businessCategories"
+                      label="Business Categories"
+                      data-type="businessCategoryFilter"
+                      options={businessCategoryOptions}
+                      value={businessCategories}
+                      variant="label-hidden"
+                      onchange={handleFilterChange}
+                    >
+                    </lightning-checkbox-group>
+
+                    <!-- Select All and Clear Selection buttons for business categories -->
+                    <div class="buttons-section">
+                      <lightning-button
+                        variant="brand-outline"
+                        label="Select All"
+                        title="Select All Business Categories"
+                        icon-name="utility:multi_select_checkbox"
+                        onclick={selectAll}
+                        data-type="businessCategories"
+                        aria-label="Select All Business Categories"
+                      ></lightning-button>
+                      <lightning-button
+                        variant="destructive-text"
+                        label="Clear Selection"
+                        title="Clear Business Category Selections"
+                        icon-name="utility:clear"
+                        class="slds-var-m-left_x-small"
+                        onclick={clearAll}
+                        data-type="businessCategories"
+                        aria-label="Clear Business Category selections"
+                      ></lightning-button>
+                    </div>
+                  </fieldset>
+                </lightning-accordion-section>
+              </lightning-accordion>
+            </section>
+          </template>
+
+          <template if:true={countyOptions}>
+            <section>
+              <!-- Accordion containing county checkboxes -->
+              <lightning-accordion allow-multiple-sections-open="true">
+                <lightning-accordion-section
+                  name="countySection"
+                  label="Expand to filter by County"
+                  title="County"
+                >
+                  <!-- Checkbox group for selecting business categories -->
+                  <lightning-checkbox-group
+                    class="checkbox-group"
+                    name="counties"
+                    label="County Filter"
+                    data-type="countyFilter"
+                    options={countyOptions}
+                    value={counties}
+                    variant="label-hidden"
+                    onchange={handleFilterChange}
+                  >
+                  </lightning-checkbox-group>
+                  <!-- Select All and Clear Selection buttons for counties -->
+                  <fieldset class="buttons-section">
+                    <lightning-button
+                      variant="brand-outline"
+                      label="Select All"
+                      title="Select All Counties"
+                      icon-name="utility:multi_select_checkbox"
+                      onclick={selectAll}
+                      data-type="counties"
+                      aria-label="Select All Counties"
+                    ></lightning-button>
+                    <lightning-button
+                      variant="destructive-text"
+                      label="Clear Selection"
+                      title="Clear County Selections"
+                      icon-name="utility:clear"
+                      class="slds-var-m-left_x-small"
+                      onclick={clearAll}
+                      data-type="counties"
+                      aria-label="Clear County selections"
+                    ></lightning-button>
+                  </fieldset>
+                </lightning-accordion-section>
+              </lightning-accordion>
+            </section>
+          </template>
+          <section>
+            
+            <section class="below-accordion table-div">
+              <!-- Search bar for searching by account name -->
+              <lightning-input
+                type="search"
+                class="slds-size_2-of-2 search-bar"
+                label="Search"
+                value={searchKey}
+                onchange={handleFilterChange}
+                data-type="searchBar"
+                placeholder="Search by business name or description"
+                variant="label-hidden"
+                aria-label="Search by business name or description"
+              ></lightning-input>
+
+              <!-- Table of accounts (registered veteran-owned businesses) -->
+              
+                <div class="table-wrapper slds-scrollable">
+                  <table
+                    class="slds-table slds-table_bordered slds-max-medium-table_stacked-horizontal thick-border"
+                  >
+                    <caption class="slds-assistive-text">
+                      Registered Veteran-Owned Businesses
+                    </caption>
+                    <thead>
+                      <tr class="slds-var-p-vertical_small">
+                        <th scope="col">
+                          <span title="Business Name">Business Name</span>
+                        </th>
+                        <th scope="col">
+                          <span title="Business Description">
+                            Business Description
+                          </span>
+                        </th>
+                        <th scope="col">
+                          <span title="Business Category">
+                            Business Category
+                          </span>
+                        </th>
+                        <th scope="col">
+                          <span title="City">City</span>
+                        </th>
+                        <th scope="col">
+                          <span title="County">County</span>
+                        </th>
+                        <th scope="col">
+                          <span title="Website">Website</span>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- Loop over the filtered accounts and display their details -->
+                      <template
+                        for:each={accounts}
+                        for:item="account"
+                        for:index="indexVar"
+                      >
+                        <tr key={account.Id} class="slds-hint-parent">
+                          <td
+                            class="div-align slds-cell-wrap"
+                            data-label="Business Name"
+                          >
+                            <span class="">
+                              <span
+                                class="slds-text-link_faux business-name"
+                                onclick={navigateToAccount}
+                                data-type={account.Id}
+                                role="button"
+                                aria-label="Navigate to the details of business named {account.Name}"
+                                >{account.Name}</span
+                              >
+                            </span>
+                          </td>
+                          <td
+                            class="div-align slds-cell-wrap"
+                            data-label="Business Description"
+                          >
+                            <span class="">
+                              {account.Business_Description__c}
+                            </span>
+                          </td>
+                          <td
+                            class="div-align slds-cell-wrap"
+                            data-label="Business Category"
+                          >
+                            <span class="">{account.Business_Category__c}</span>
+                          </td>
+                          <td
+                            class="div-align slds-cell-wrap"
+                            data-label="Billing City"
+                          >
+                            <span class="">{account.BillingCity}</span>
+                          </td>
+                          <td
+                            class="div-align slds-cell-wrap"
+                            data-label="County"
+                          >
+                            <span class="">{account.County__c}</span>
+                          </td>
+                          <td
+                            class="div-align slds-cell-wrap"
+                            data-label="Website"
+                          >
+                            <span class="">{account.Website}</span>
+                          </td>
+                        </tr>
+                      </template>
+                    </tbody>
+                  </table>
+                </div>
+              
+            </section>
+          
+          </section>
+        </lightning-layout-item>
+      </lightning-layout>
+    </lightning-card>
+  </main>
+  <!-- Space below the card -->
+  <div class="bottom-space"></div>
+</template>
