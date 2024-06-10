@@ -1,0 +1,15 @@
+<template>
+    <div class="popup" if:true={isVisible}>
+        <div class="popup-content">
+            <button class="close-button" onclick={closePopup}>X</button>
+            <h2>{business.Name}</h2>
+            <p><strong>Description:</strong> {business.Business_Description__c}</p>
+            <p><strong>Category:</strong> {business.Business_Category__c}</p>
+            <p><strong>Website:</strong> <a href={business.Website} target="_blank">{business.Website}</a></p>
+            <p><strong>Phone:</strong> {business.Phone}</p>
+            <p><strong>Address:</strong> {business.BillingStreet}, {business.BillingCity}, {business.BillingState}, {business.BillingPostalCode}</p>
+            <p><strong>Instagram:</strong> {business.Instagram__c}</p>
+            <p><strong>Twitter:</strong> {business.Twitter__c}</p>
+        </div>
+    </div>
+</template>

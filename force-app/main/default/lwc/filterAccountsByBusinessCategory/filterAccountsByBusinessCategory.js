@@ -244,4 +244,12 @@ export default class FilterAccountByBusinessCategory extends NavigationMixin(Lig
     // Call the refreshData method to refresh the data
     this.refreshData();
   }
+
+  handleMouseOver(event) {
+    const accountId = event.target.dataset.id;
+    const account = this.accounts.find(acc => acc.Id === accountId);
+    const popup = this.template.querySelector('c-business-details-popup');
+    popup.show(account);
+  }
+
 }

@@ -184,8 +184,8 @@
                             <span class="">
                               <span
                                 class="slds-text-link_faux business-name"
-                                onclick={navigateToAccount}
-                                data-type={account.Id}
+                                onmouseover={handleMouseOver}
+                                data-id={account.Id}
                                 role="button"
                                 aria-label="Navigate to the details of business named {account.Name}"
                                 >{account.Name}</span
@@ -241,4 +241,7 @@
   </main>
   <!-- Space below the card -->
   <div class="bottom-space"></div>
+
+    <!-- Include the businessDetailsPopup component -->
+    <c-business-details-popup></c-business-details-popup>
 </template>
