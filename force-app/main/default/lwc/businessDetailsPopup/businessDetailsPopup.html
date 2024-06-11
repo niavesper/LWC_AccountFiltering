@@ -1,15 +1,20 @@
 <template>
-    <div class="popup" if:true={isVisible}>
+    <div class="popup" if:true={isVisible} onclick={handlePopupClick}>
         <div class="popup-content">
             <button class="close-button" onclick={closePopup}>X</button>
             <h2>{business.Name}</h2>
-            <p><strong>Description:</strong> {business.Business_Description__c}</p>
-            <p><strong>Category:</strong> {business.Business_Category__c}</p>
-            <p><strong>Website:</strong> <a href={business.Website} target="_blank">{business.Website}</a></p>
+            <p><strong>Business Description:</strong> {business.Business_Description__c}</p>
+            <p><strong>Business Category:</strong> {business.Business_Category__c}</p>
+            <p><strong>Website:</strong>&nbsp;<a href={business.Website} target="_blank">{business.Website}</a></p>
             <p><strong>Phone:</strong> {business.Phone}</p>
-            <p><strong>Address:</strong> {business.BillingStreet}, {business.BillingCity}, {business.BillingState}, {business.BillingPostalCode}</p>
-            <p><strong>Instagram:</strong> {business.Instagram__c}</p>
-            <p><strong>Twitter:</strong> {business.Twitter__c}</p>
+            <p>
+                <strong>Address:</strong>&nbsp;
+                <a href="javascript:void(0);" onclick={openGoogleMaps}>
+                  {business.BillingStreet}, {business.BillingCity}, {business.BillingState}, {business.BillingPostalCode}
+                </a>
+            </p>
+            <p><strong>Instagram:</strong>&nbsp;<a href={business.Instagram__c} target="_blank">{business.Instagram__c}</a></p>
+            <p><strong>Twitter:</strong>&nbsp;<a href={business.Twitter__c} target="_blank">{business.Twitter__c}</a></p>
         </div>
     </div>
 </template>

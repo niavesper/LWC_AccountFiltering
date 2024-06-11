@@ -58,6 +58,6 @@ public with sharing class GetAccountsByBusinessCategory {
 
     // Build the basic SOQL query. If no filter category is provided and no search key is provided, this basic query is used
     private static String buildAccountQuery() {
-        return 'SELECT Id, Name, Business_Category__c, Business_Description__c, County__c, BillingCity, Website FROM Account WHERE RecordTypeId = :businessRegistrationRecordTypeId';
+        return 'SELECT Id, Name, Business_Category__c, Business_Description__c, County__c, BillingStreet, BillingCity, BillingState, BillingPostalCode, Website, Phone, Instagram__c, Twitter__c FROM Account WHERE RecordTypeId = :businessRegistrationRecordTypeId';
     }
 }

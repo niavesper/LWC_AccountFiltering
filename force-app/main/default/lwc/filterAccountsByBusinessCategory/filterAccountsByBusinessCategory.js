@@ -37,6 +37,7 @@ export default class FilterAccountByBusinessCategory extends NavigationMixin(Lig
   businessCategoryOptions; // Stores the picklist values for the "Business Categories" field
   countyOptions; // Stores the picklist values for the "Counties" field
   hasRendered = false; // Flag to check if the component has rendered
+  openPopupId = null;
 
   // Used to retrieve metadata about the Account object from Salesforce.
   @wire(getObjectInfo, { objectApiName: ACCOUNT_OBJECT })
@@ -44,12 +45,15 @@ export default class FilterAccountByBusinessCategory extends NavigationMixin(Lig
 
   // Getter method to get the record type Id for the "Business Registration" record type
   get recordTypeId() {
-    // Constant that holds an object that maps record type IDs to their corresponding record type info. 
-    const rtis = this.objectInfo.data.recordTypeInfos;
-    // Returns the record type Id for the "Business Registration" record type
-    return Object.keys(rtis).find(
+    if (this.objectInfo.data) {
+      // Constant that holds an object that maps record type IDs to their corresponding record type info. 
+      const rtis = this.objectInfo.data.recordTypeInfos;
+      // Returns the record type Id for the "Business Registration" record type
+      return Object.keys(rtis).find(
       (rti) => rtis[rti].name === "Business Registration"
     );
+  }
+  return null;
   }
   
   /**
@@ -250,6 +254,11 @@ export default class FilterAccountByBusinessCategory extends NavigationMixin(Lig
     const account = this.accounts.find(acc => acc.Id === accountId);
     const popup = this.template.querySelector('c-business-details-popup');
     popup.show(account);
-  }
+}
 
+  handleClick(event) {
+    const accountId = event.target.dataset.id;
+    const account = this.accounts.find(acc => acc.Id === accountId);
+    const popup = this.template.querySelector('c-business-details-popup');
+  }
 }
