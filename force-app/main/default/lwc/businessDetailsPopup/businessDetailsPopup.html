@@ -1,5 +1,5 @@
 <template>
-    <div class="popup" if:true={isVisible} onclick={handlePopupClick}>
+    <div class="popup" if:true={isVisible} tabindex="-1">
         <div class="popup-content">
             <button class="close-button" onclick={closePopup}>X</button>
             <h2>{business.Name}</h2>

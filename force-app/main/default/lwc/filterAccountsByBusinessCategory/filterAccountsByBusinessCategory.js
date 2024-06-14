@@ -260,5 +260,6 @@ export default class FilterAccountByBusinessCategory extends NavigationMixin(Lig
     const accountId = event.target.dataset.id;
     const account = this.accounts.find(acc => acc.Id === accountId);
     const popup = this.template.querySelector('c-business-details-popup');
+    popup.show(account);
   }
 }
