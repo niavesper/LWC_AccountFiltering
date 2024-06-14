@@ -1,6 +1,34 @@
+<!--
+  @fileoverview This HTML is part of the LWC BusinessDetailsPopup. For more context, 
+  see DTS Salesforce Team Jira issue FORCE-161.
+   
+  This component allows users to:
+  - Display a popup with detailed information about a selected business.
+  - Close the popup by clicking outside of it or on the close button.
+  - Open Google Maps with the business address in a new tab.
+  
+  Dependencies:
+  - Uses the BusinessDetailsPopup JavaScript file.
+  - CSS classes for styling the popup and its content.
+  
+  Usage:
+  - This component is used to show business details in a popup when a business name is clicked.
+  
+  Limitations and Considerations:
+  - Ensure that the component is provided with valid business details to display.
+  
+  Modification History:
+  - @version 1.0: Initial version by Ksenia Choate, 06/14/2024
+-->
+
 <template>
-    <div class="popup" if:true={isVisible} tabindex="-1">
+    <!-- if:true={isVisible} : This is a conditional directive in Lightning Web Components (LWC). It means that this <div> element will only
+    be rendered and included in the DOM if the isVisible property in the component's JavaScript class is true. -->
+    <div class="popup" if:true={isVisible} tabindex="-1"> 
         <div class="popup-content">
+            <!-- Creates a <button> element and attaches a click event handler to the button. When the button is clicked, the closePopup
+            method from the component's JavaScript class will be called. The closePopup method is responsible for hiding the popup and
+            resetting the business property. -->
             <button class="close-button" onclick={closePopup}>X</button>
             <h2>{business.Name}</h2>
             <p><strong>Business Description:</strong> {business.Business_Description__c}</p>

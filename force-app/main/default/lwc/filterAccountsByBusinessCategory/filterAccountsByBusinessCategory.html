@@ -1,13 +1,31 @@
 <!--
-  This is the main template for the FilterAccountsByBusinessCategory LWC. It displays a list of registered
-  veteran-owned businesses and provides filtering options by business category, county, and search key. The LWC lives
-  on the Experience Cloud site Business Registrations (https://vbr.veterans.utah.gov/s/) and is used by the public to search for registered
-  veteran-owned businesses in Utah. The LWC is used in conjunction with the Apex class GetAccountsByBusinessCategory.
-  See DTS Salesforce Team Jira issue FORCE-80 for more context.
-  Author: Ksenia Choate
-  Date: 03/26/2024
-  Version: 1.0
+  @fileoverview This JS is part of the LWC filterAccountByBusinessCategory. For more context, 
+  see DTS Salesforce Team Jira issues FORCE-80 and FORCE-161. 
+
+  Key Features:
+  - Displays a list of registered veteran-owned businesses.
+  - Provides filtering options by business category and county using picklist values.
+  - Includes a search bar for filtering by business name or description.
+  - Supports viewing detailed business information in a popup when a business name is clicked.
+
+  Dependencies:
+  - Apex class: GetAccountsByBusinessCategory
+  - Schema objects: Account
+  - Includes c-business-details-popup component for displaying business details.
+
+  Usage:
+  - This template is embedded in the Experience Cloud site Business Registrations (https://vbr.veterans.utah.gov/s/).
+  - Users can interact with the filters and search bar to find and view details of veteran-owned businesses in Utah.
+
+  Limitations or Considerations:
+  - Ensure that the picklist values for business categories and counties are up to date in the Salesforce schema.
+  - Handle any network errors gracefully when loading picklist values and filtering accounts.
+
+  Modification History:
+  - @version 1.0: Initial version by Ksenia Choate, 03/26/2024
+  - @version 1.1: Added reference to the businessDetailsPopup component, Ksenia Choate, 06/14/2024
 -->
+
 <template>
   <header>
     <h1 class="slds-form-element__label page-title">

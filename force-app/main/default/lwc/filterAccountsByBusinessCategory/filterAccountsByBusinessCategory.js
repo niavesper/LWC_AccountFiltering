@@ -1,12 +1,28 @@
 /**
- * @fileoverview This JS is part of the LWC filterAccountByBusinessCategory that provides functionality to filter
- * Salesforce Account records by business category, county, and search key. The LWC lives on the Experience Cloud site
- * Business Registrations (https://vbr.veterans.utah.gov/s/) and is used by the public to search for registered
- * veteran-owned businesses in Utah. The LWC is used in conjunction with the Apex class GetAccountsByBusinessCategory.
- * See DTS Salesforce Team Jira issue FORCE-80 for more context.
- * @author Ksenia Choate
- * @date 03/26/2024
- * @version 1.0
+ * @fileoverview This JS is part of the LWC filterAccountByBusinessCategory. For more context, see DTS Salesforce Team
+ * Jira issues FORCE-80 and FORCE-161.
+ * 
+ * This component allows users to:
+ * - Filter accounts by business category using picklist values.
+ * - Filter accounts by county using picklist values.
+ * - Search accounts by a search key (e.g., business name or description).
+ * - View detailed information about a business in a popup when clicking on the business name.
+ * 
+ * Dependencies:
+ * - Apex class: GetAccountsByBusinessCategory
+ * - Schema objects: Account
+ * 
+ * Usage:
+ * - This component is embedded on the Experience Cloud site Business Registrations (https://vbr.veterans.utah.gov/s/).
+ * - Users can filter and search for veteran-owned businesses registered in Utah.
+ * 
+ * Limitations and Considerations:
+ * - Ensure that the picklist values for business categories and counties are up to date in the Salesforce schema.
+ * - Handle network errors gracefully when loading picklist values and filtering accounts.
+ * 
+ * Modification History:
+ * - @version 1.0: Initial version by Ksenia Choate, 03/26/2024
+ * - @version 1.1: Added handleClick method to handle click events on business names, Ksenia Choate, 06/14/2024
  */
 
 import { LightningElement, wire, track } from "lwc";
@@ -249,17 +265,16 @@ export default class FilterAccountByBusinessCategory extends NavigationMixin(Lig
     this.refreshData();
   }
 
-  handleMouseOver(event) {
-    const accountId = event.target.dataset.id;
-    const account = this.accounts.find(acc => acc.Id === accountId);
-    const popup = this.template.querySelector('c-business-details-popup');
-    popup.show(account);
-}
-
-  handleClick(event) {
-    const accountId = event.target.dataset.id;
-    const account = this.accounts.find(acc => acc.Id === accountId);
-    const popup = this.template.querySelector('c-business-details-popup');
-    popup.show(account);
-  }
+  /**
+   * @method handleClick
+   * @param {object} event - The event object containing the click information
+   * @description Handles click events on business names in the table of accounts
+   * @returns {void}
+   */
+    handleClick(event) {
+      const accountId = event.target.dataset.id; // Extracts the account ID from the clicked element
+      const account = this.accounts.find(acc => acc.Id === accountId); // Finds the account in the accounts array that matches the account ID
+      const popup = this.template.querySelector('c-business-details-popup'); // Finds the business details popup component
+      popup.show(account); // Calls the show method to display the account details in the popup 
+    }
 }
