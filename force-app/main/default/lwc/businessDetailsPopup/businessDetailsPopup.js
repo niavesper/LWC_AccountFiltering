@@ -91,6 +91,18 @@ export default class BusinessDetailsPopup extends LightningElement {
         document.removeEventListener('click', this.handleDocumentClick, true); // Removes the event listener for click events on the document to prevent memory leaks.
     }
 
+    
+    /**
+     * @method handleAddressClick
+     * @description Handles click events on the address element. Opens Google Maps in a new tab with the business address.
+     * @returns {void}
+     */
+    handleAddressClick(event) {
+        event.preventDefault();
+        this.openGoogleMaps();
+    }
+    
+    
     /**
      * @method openGoogleMaps
      * @description Opens Google Maps in a new tab with the business address.
