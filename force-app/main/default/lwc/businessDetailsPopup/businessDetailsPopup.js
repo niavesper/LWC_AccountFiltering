@@ -44,10 +44,13 @@ export default class BusinessDetailsPopup extends LightningElement {
             this.business = {};
             return;
         }
-        
+    
+        // Logging business object to verify it contains the correct data
+        console.log('Business Object:', JSON.stringify(business));
+    
         this.business = business;
-        this.isVisible = true; // Sets the isVisible property to true, making the popup visible.
-        this.template.querySelector('.popup').focus(); // Sets the focus to the popup element for accessibility.
+        this.isVisible = true;
+        this.template.querySelector('.popup').focus();
     }
 
     /**
@@ -90,28 +93,11 @@ export default class BusinessDetailsPopup extends LightningElement {
     disconnectedCallback() { // This is a lifecycle hook that runs when the component is removed from the DOM.
         document.removeEventListener('click', this.handleDocumentClick, true); // Removes the event listener for click events on the document to prevent memory leaks.
     }
-
-    
-    /**
-     * @method handleAddressClick
-     * @description Handles click events on the address element. Opens Google Maps in a new tab with the business address.
-     * @returns {void}
-     */
-    handleAddressClick(event) {
+    openGoogleMaps(event) {
         event.preventDefault();
-        this.openGoogleMaps();
-    }
-    
-    
-    /**
-     * @method openGoogleMaps
-     * @description Opens Google Maps in a new tab with the business address.
-     * @returns {void}
-     */
-    openGoogleMaps() { // This method is used to open Google Maps with the address of the business.
-        const address = encodeURIComponent(`${this.business.BillingStreet}, ${this.business.BillingCity}, ${this.business.BillingState}, ${this.business.BillingPostalCode}`); // Constructs the address string using the business details and encodes it for use in a URL.
-        const url = `https://www.google.com/maps/search/?api=1&query=${address}`; // Constructs the Google Maps search URL with the encoded address.
-        window.open(url, '_blank'); // Opens the constructed URL in a new browser tab.
+        const address = `${this.business.BillingStreet}, ${this.business.BillingCity}, ${this.business.BillingState}, ${this.business.BillingPostalCode}`;
+        const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+        window.open(mapsUrl, '_blank');
     }
 }
 

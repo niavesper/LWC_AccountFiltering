@@ -36,10 +36,10 @@
             <p><strong>Website:</strong>&nbsp;<a href={business.Website} target="_blank">{business.Website}</a></p>
             <p><strong>Phone:</strong> {business.Phone}</p>
             <p>
-                <strong>Address:</strong>&nbsp;
-                <a href="#" onclick={handleAddressClick}>
+              <strong>Address:</strong> 
+              <a href="#" onclick={openGoogleMaps}>
                   {business.BillingStreet}, {business.BillingCity}, {business.BillingState}, {business.BillingPostalCode}
-                </a>
+              </a>
             </p>
             <p><strong>Instagram:</strong>&nbsp;<a href={business.Instagram__c} target="_blank">{business.Instagram__c}</a></p>
             <p><strong>Twitter:</strong>&nbsp;<a href={business.Twitter__c} target="_blank">{business.Twitter__c}</a></p>
