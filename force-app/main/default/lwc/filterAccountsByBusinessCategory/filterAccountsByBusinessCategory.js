@@ -10,8 +10,7 @@
  * 
  * Dependencies:
  * - Apex class: GetAccountsByBusinessCategory
- * - Schema objects: Account
- * 
+ *  
  * Usage:
  * - This component is embedded on the Experience Cloud site Business Registrations (https://vbr.veterans.utah.gov/s/).
  * - Users can filter and search for veteran-owned businesses registered in Utah.
@@ -271,10 +270,24 @@ export default class FilterAccountByBusinessCategory extends NavigationMixin(Lig
    * @description Handles click events on business names in the table of accounts
    * @returns {void}
    */
-    handleClick(event) {
-      const accountId = event.target.dataset.id; // Extracts the account ID from the clicked element
-      const account = this.accounts.find(acc => acc.Id === accountId); // Finds the account in the accounts array that matches the account ID
-      const popup = this.template.querySelector('c-business-details-popup'); // Finds the business details popup component
-      popup.show(account); // Calls the show method to display the account details in the popup 
-    }
+  handleClick(event) {
+    const accountId = event.target.dataset.id;
+    const account = this.accounts.find(acc => acc.Id === accountId);
+    const popup = this.template.querySelector('c-business-details-popup');
+    popup.show({
+        Id: account.Id,
+        Name: account.Name,
+        BillingStreet: account.BillingStreet || '',
+        BillingCity: account.BillingCity || '',
+        BillingState: account.BillingState || '',
+        BillingPostalCode: account.BillingPostalCode || '',
+        BillingCountry: account.BillingCountry || '',
+        Business_Description__c: account.Business_Description__c,
+        Business_Category__c: account.Business_Category__c,
+        Website: account.Website,
+        Phone: account.Phone,
+        Instagram__c: account.Instagram__c,
+        Twitter__c: account.Twitter__c
+    });
+}
 }
