@@ -3,25 +3,26 @@
   see DTS Salesforce Team Jira issue FORCE-161.
    
   This component allows users to:
-  - Display a popup with detailed information about a selected business.
+  - Open a popup with detailed information about a selected business.
   - Close the popup by clicking outside of it or on the close button.
   - Open Google Maps with the business address in a new tab.
-  
+  - Open URLs for the business website and social meadia accounts in a new tab.
+
   Dependencies:
-  - Uses the BusinessDetailsPopup JavaScript file.
-  - CSS classes for styling the popup and its content.
-  
+  - LWC filterAccountsbyBusinessCategory
+
   Usage:
-  - This component is used to show business details in a popup when a business name is clicked.
-  
-  Limitations and Considerations:
-  - Ensure that the component is provided with valid business details to display.
+  - This component is used to show business details in a popup when a 
+  business name is clicked in the FilterAccountsByBusinessCategory component.
   
   Modification History:
   - @version 1.0: Initial version by Ksenia Choate, 06/14/2024
+  - @version 1.1: Updated by Ksenia Choate to fix the issue with Google Maps link not working, 07/30/2024
 -->
 
+
 <template>
+<<<<<<< HEAD
     <!-- if:true={isVisible} : This is a conditional directive in Lightning Web Components (LWC). It means that this <div> element will only
     be rendered and included in the DOM if the isVisible property in the component's JavaScript class is true. -->
     <div class="popup" if:true={isVisible} tabindex="-1"> 
@@ -44,3 +45,25 @@
         </div>
     </div>
 </template>
+=======
+  <div class="popup" if:true={isVisible} tabindex="-1"> 
+      <div class="popup-content">
+          <button class="close-button" onclick={closePopup}>X</button>
+          <h2>{business.Name}</h2>
+          <p><strong>Business Description:</strong> {business.Business_Description__c}</p>
+          <p><strong>Business Category:</strong> {business.Business_Category__c}</p>
+          <p><strong>Website:</strong>&nbsp;<a href={business.Website} target="_blank">{business.Website}</a></p>
+          <p><strong>Phone:</strong> {business.Phone}</p>
+          <p>
+            <strong>Address:</strong>&nbsp;
+            <a href={googleMapsLink} target="_blank">
+              {billingAddress.street}, {billingAddress.city}, {billingAddress.state} {billingAddress.postalCode}, {billingAddress.country}
+            </a>
+        </p>
+          <p><strong>Instagram:</strong>&nbsp;<a href={business.Instagram__c} target="_blank">{business.Instagram__c}</a></p>
+          <p><strong>Twitter:</strong>&nbsp;<a href={business.Twitter__c} target="_blank">{business.Twitter__c}</a></p>
+      </div>
+  </div>
+</template>
+
+>>>>>>> experiment/address-fixes

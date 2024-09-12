@@ -1,0 +1,12 @@
+{
+  "packageDirectories": [
+    {
+      "path": "force-app",
+      "default": true
+    }
+  ],
+  "name": "va2",
+  "namespace": "",
+  "sfdcLoginUrl": "https://utvets--va2.sandbox.my.salesforce.com",
+  "sourceApiVersion": "59.0"
+}

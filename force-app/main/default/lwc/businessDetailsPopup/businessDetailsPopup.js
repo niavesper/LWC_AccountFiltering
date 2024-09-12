@@ -7,88 +7,84 @@
  * - Display a popup with detailed information about a selected business.
  * - Close the popup by clicking outside of it or on the X inside the popup.
  * - Open Google Maps with the business address in a new tab.
- * - Open URLs for the business website and social meadia accounts
+ * - Open URLs for the business website and social meadia accounts in a new tab.
  * 
  * Dependencies:
  * - LWC filterAccountsbyBusinessCategory
- * - Schema objects: Account
- * 
+ *  
  * Usage:
  * - This component is used to show business details in a popup when a business name is clicked.
+ * in the FilterAccountsByBusinessCategory component.
  * 
  * Limitations and Considerations:
  * - Ensure that the component is provided with valid business details to display.
  * 
  * Modification History:
  * - @version 1.0: Initial version by Ksenia Choate, 06/14/2024
+ * - @version 1.1: Updated by Ksenia Choate to fix the issue with Google Maps link not working, 07/30/2024
  */
 
 import { LightningElement, api, track } from 'lwc';
 
 export default class BusinessDetailsPopup extends LightningElement {
-    @track isVisible = false; // This property determines whether the popup is visible or not. It is initially set to false.
-    @track business = {}; // This property holds the business details object. It is initially an empty object.
+    @track isVisible = false; 
+    @track business = {}; 
+    @track billingAddress = {}; 
 
-    /**
-     * @method show
-     * @description Displays the popup with the given business details.
-     * @param {Object} business - The business object containing details to be displayed in the popup.
-     * @returns {void}
-     */
-    
-    @api // This decorator makes the show method a public method that can be called by parent components.
+    @api 
     show(business) {
         if (!business || !business.Name) {
             this.showErrorMessage('Invalid business details provided');
             this.isVisible = false;
             this.business = {};
+            this.billingAddress = {};
             return;
         }
-        
+
+        console.log('Business Object:', JSON.stringify(business));
+    
         this.business = business;
-        this.isVisible = true; // Sets the isVisible property to true, making the popup visible.
-        this.template.querySelector('.popup').focus(); // Sets the focus to the popup element for accessibility.
+        this.billingAddress = {
+            street: business.BillingStreet || '',
+            city: business.BillingCity || '',
+            state: business.BillingState || '',
+            postalCode: business.BillingPostalCode || '',
+            country: business.BillingCountry || ''
+        };
+        this.isVisible = true;
+        this.template.querySelector('.popup').focus();
     }
 
-    /**
-     * @method closePopup
-     * @description Hides the popup and clears the business details.
-     * @returns {void}
-     */
     closePopup() {
-        this.isVisible = false; // Sets the isVisible property to false, hiding the popup.
-        this.business = {}; // Resets the business property to an empty object.
+        this.isVisible = false; 
+        this.business = {}; 
+        this.billingAddress = {};
     }
 
-    /**
-     * @method handleDocumentClick
-     * @description Handles click events on the document. Closes the popup if the click is outside the popup.
-     * @param {Event} event - The event object representing the click event.
-     * @returns {void}
-     */
-    handleDocumentClick = (event) => { // This arrow function is assigned to handle document click events.
-        const popup = this.template.querySelector('.popup'); // Selects the popup element.
-        if (this.isVisible && popup && !popup.contains(event.target)) { // Checks if the popup is visible, if the popup element exists, and if the click event target is outside the popup.
-            this.closePopup(); // Calls the closePopup method to close the popup if the conditions are met.
+    handleDocumentClick = (event) => { 
+        const popup = this.template.querySelector('.popup'); 
+        if (this.isVisible && popup && !popup.contains(event.target)) { 
+            this.closePopup(); 
         }
     }
 
-    /**
-     * @method connectedCallback
-     * @description Lifecycle hook that is called when the component is added to the DOM. Adds an event listener for document clicks.
-     * @returns {void}
-     */
-    connectedCallback() { // This is a lifecycle hook that runs when the component is added to the DOM.
-        document.addEventListener('click', this.handleDocumentClick, true); // Adds an event listener for click events on the document. The third parameter true indicates that the event is captured in the capturing phase.
+    connectedCallback() { 
+        document.addEventListener('click', this.handleDocumentClick, true); 
     }
 
-    /**
-     * @method disconnectedCallback
-     * @description Lifecycle hook that is called when the component is removed from the DOM. Removes the event listener for document clicks.
-     * @returns {void}
-     */
-    disconnectedCallback() { // This is a lifecycle hook that runs when the component is removed from the DOM.
-        document.removeEventListener('click', this.handleDocumentClick, true); // Removes the event listener for click events on the document to prevent memory leaks.
+    disconnectedCallback() { 
+        document.removeEventListener('click', this.handleDocumentClick, true); 
     }
+<<<<<<< HEAD
+=======
+
+    get googleMapsLink() {
+        if (this.billingAddress) {
+            const { street, city, state, postalCode, country } = this.billingAddress;
+            const address = `${street}, ${city}, ${state} ${postalCode}, ${country}`;
+            return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address.trim().replace(/\s\s+/g, ' '))}`;
+        }
+        return '';
+    }
+>>>>>>> experiment/address-fixes
 }
-
