@@ -1,0 +1,104 @@
+<template>
+        <lightning-card title="Filter by Interest Area" icon-name="utility:filter">
+            <lightning-layout multiple-rows="true">
+                <lightning-layout-item padding="around-small" size="12">
+                    <template if:true={options}>
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label">
+                                Interest Area(s)
+                            </label>
+                            <lightning-checkbox-group name="interestAreas" label="Interest Areas" data-type="filter"
+                                                      options={options} value={interestAreas} variant="label-hidden"
+                                                      onchange={handleFilterChange} style="columns: 4;">
+                            </lightning-checkbox-group>
+                        </div>
+                    </template>
+                   <!-- {interestAreaOptions} -->
+              
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-layout multiple-rows="true">
+                <lightning-layout-item padding="around-small" size="12">
+                    <lightning-button variant="brand-outline" label="Select All" title="Select All Interest Areas" icon-name="utility:multi_select_checkbox" class="" onclick={selectAll}></lightning-button>
+                    
+
+                    <lightning-button variant="destructive-text" label="Clear Selection" title="Clear Interest Area Selections" icon-name="utility:clear" class="slds-m-left_x-small" onclick={clearAll}></lightning-button>
+                   <!-- {interestAreaOptions} -->
+                </lightning-layout-item>
+            </lightning-layout>
+  
+            
+            <!-- <div class="c-container" data-id="topDiv"> -->
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item padding="around-small" size="12">
+                        <lightning-input type="search" class="slds-size_2-of-2" label="Search" value={searchKey} onchange={handleFilterChange} data-type="searchBar" placeholder="Search by board name" field-level-help="">
+                        </lightning-input>
+                    </lightning-layout-item>
+                </lightning-layout>
+            <!-- </div> -->
+
+            <lightning-layout multiple-rows="true">
+                <lightning-layout-item padding="around-small" size="12" flexibility="auto">
+            <template if:true={boards}>
+                <div class="tableDiv" style="height:35rem;" >
+                    <div class="tableFixHead slds-scrollable" style="height:100%;">
+                        <table class="slds-table slds-table_bordered slds-max-medium-table_stacked-horizontal">
+                            <thead>
+                                <tr class="slds-p-vertical_small">
+                                    <th class="" scope="col">
+                                        <div class="divalign slds-cell-wrap slds-p-vertical_bar small"  title="Board Name">Board Name </div>
+                                    </th>    
+                                
+                                
+                                    <th class="" scope="col">
+                                        <div class="divalign slds-cell-wrap slds-p-vertical_bar small"  title="Board Name">Department </div>
+                                    </th>    
+                              
+                              
+                                    <th class="" scope="col">
+                                        <div class="divalign slds-cell-wrap slds-p-vertical_bar small"  title="Board Name">Board Summary</div>
+                                    </th>  
+                                    <th class="" scope="col">
+                                        <div class="divalign slds-cell-wrap slds-p-vertical_bar small"  title="Board Name">Interest Areas </div>
+                                    </th>   
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                             
+                                <template for:each={boards} for:item="board" for:index="indexVar">
+                                    <tr key={board.Id} class="slds-hint-parent ">
+                                        
+                                        <td class="divalign slds-cell-wrap" data-label="Board Name &nbsp;">
+                                            <div class="">
+                                                <!-- <lightning-button variant="base" label={board.Name} title="View Board" onclick={navigateToBoard} class=""></lightning-button> -->
+                                                <span class="slds-text-link_faux" onclick={navigateToBoard} data-type={board.Id}>{board.Name}</span>
+                                            </div>
+                                        </td>
+                                        <td class="divalign slds-cell-wrap" data-label="Board Name &nbsp;">
+                                            <div class="">
+                                                {board.Department__r.Name}
+                                            </div>
+                                        </td>
+                                        <td class="divalign slds-cell-wrap" data-label="Board Name &nbsp;">
+                                            <div class="">
+                                                {board.Board_Summary__c}
+                                            </div>
+                                        </td>
+                                        <td class="divalign slds-cell-wrap" data-label="Board Name &nbsp;">
+                                            <div class="">
+                                                {board.Interest_Area__c}
+                                            </div>
+                                        </td>
+                              
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </template>
+        </lightning-layout-item>            
+    </lightning-layout>
+        </lightning-card>
+</template>
