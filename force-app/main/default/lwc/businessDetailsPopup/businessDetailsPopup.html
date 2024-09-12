@@ -22,30 +22,6 @@
 
 
 <template>
-<<<<<<< HEAD
-    <!-- if:true={isVisible} : This is a conditional directive in Lightning Web Components (LWC). It means that this <div> element will only
-    be rendered and included in the DOM if the isVisible property in the component's JavaScript class is true. -->
-    <div class="popup" if:true={isVisible} tabindex="-1"> 
-        <div class="popup-content">
-            <!-- Creates a <button> element and attaches a click event handler to the button. When the button is clicked, the closePopup
-            method from the component's JavaScript class will be called. The closePopup method is responsible for hiding the popup and
-            resetting the business property. -->
-            <button class="close-button" onclick={closePopup}>X</button>
-            <h2>{business.Name}</h2>
-            <p><strong>Business Description:</strong> {business.Business_Description__c}</p>
-            <p><strong>Business Category:</strong> {business.Business_Category__c}</p>
-            <p><strong>Website:</strong>&nbsp;<a href={business.Website} target="_blank">{business.Website}</a></p>
-            <p><strong>Phone:</strong> {business.Phone}</p>
-            <p>
-                <strong>Address:</strong>&nbsp;
-                  {business.BillingStreet}, {business.BillingCity}, {business.BillingState}, {business.BillingPostalCode}
-            </p>
-            <p><strong>Instagram:</strong>&nbsp;<a href={business.Instagram__c} target="_blank">{business.Instagram__c}</a></p>
-            <p><strong>Twitter:</strong>&nbsp;<a href={business.Twitter__c} target="_blank">{business.Twitter__c}</a></p>
-        </div>
-    </div>
-</template>
-=======
   <div class="popup" if:true={isVisible} tabindex="-1"> 
       <div class="popup-content">
           <button class="close-button" onclick={closePopup}>X</button>
@@ -66,4 +42,3 @@
   </div>
 </template>
 
->>>>>>> experiment/address-fixes

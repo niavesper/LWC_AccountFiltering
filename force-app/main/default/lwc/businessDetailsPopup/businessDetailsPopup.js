@@ -75,8 +75,6 @@ export default class BusinessDetailsPopup extends LightningElement {
     disconnectedCallback() { 
         document.removeEventListener('click', this.handleDocumentClick, true); 
     }
-<<<<<<< HEAD
-=======
 
     get googleMapsLink() {
         if (this.billingAddress) {
@@ -86,5 +84,4 @@ export default class BusinessDetailsPopup extends LightningElement {
         }
         return '';
     }
->>>>>>> experiment/address-fixes
 }
